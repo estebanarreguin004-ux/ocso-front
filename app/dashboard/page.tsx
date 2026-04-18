@@ -1,13 +1,15 @@
+import EmployeesLocation from "./_components/EmployeesLocation";
 
-export default function DashboardPage() {
+export default function DashboardPage({ searchParams }: { searchParams: { store?: string } }) {
     return (
     <>
-        <div className="h-full w-1/5 bg-red-100 ">
-        <p>Section 1</p>
+        <div className="h-full w-4/12 ">
+        <div className="h-[90vh] overflow-hidden overflow-y-auto">
+            <EmployeesLocation store={searchParams?.store || ""} />
         </div>
-        <div className="h-full w-3/6 bg-red-100">
-        <p>Section 2</p>
+        
         </div>
+
     </>
     )
 }

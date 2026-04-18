@@ -4,9 +4,15 @@ import { Button, Input } from "@nextui-org/react";
 import Link from "next/link";
 import axios from "axios";
 import { API_URL } from "@/constants";
+import { useState } from "react";
+import { Spinner } from "@nextui-org/react";
+import { useRouter } from "next/navigation";
 
 export default function LoginPage() {
+    const [submitting, setSubmitting] = useState(false);
+    const router = useRouter();
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        setSubmitting(true);
         e.preventDefault();
         const formData = new FormData(e.target as HTMLFormElement);
         let authData: any ={}
@@ -18,15 +24,13 @@ export default function LoginPage() {
         //return;
         
         try {
-            const { data } = await axios.post(`${API_URL}/auth/login`, authData, { withCredentials: true });
-            console.log("Respuesta del servidor:", data);
-            
-            // Aquí deberías guardar el token (localStorage o Cookies)
-            // localStorage.setItem("token", data.token);
-            
+            const response = await axios.post(`${API_URL}/auth/login`, authData, { withCredentials: true });
+            if(response.status === 201) {
+                router.push("/dashboard");
+            }
+            setSubmitting(false);   
         } catch (error: any) {
-            console.error("Error en el login:", error.response?.data || error.message);
-            alert("Error al iniciar sesión: " + (error.response?.data?.message || "Servidor no disponible"));
+            setSubmitting(false);
         }
     }
 
@@ -43,7 +47,9 @@ export default function LoginPage() {
                 label: "text-white",
             }} />
             <div className="flex flex-col items-center">
-                <Button color="default" className="py-4" type="submit">Iniciar sesión</Button>
+                <Button color="default" disabled={submitting} className="py-4" type="submit">
+                    {submitting ? <Spinner size="md" /> : "Iniciar sesión"}
+                </Button>
                 <p>¿No tienes una cuenta? <Link href="/signup" className="text-blue-400 underline">Regístrate</Link></p>
             </div>
         </div>
