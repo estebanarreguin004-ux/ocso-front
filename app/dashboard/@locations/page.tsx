@@ -1,4 +1,3 @@
-import axios from "axios"
 import { Location } from "@/entities";
 import SelectLocations from "./_components/SelectLocations";
 import LocationCard from "./_components/LocationCard";
@@ -6,14 +5,20 @@ import { API_URL } from "@/constants";
 import FormNewLocation from "./_components/FormNewLocation";
 import DeleteLocationButton from "./_components/DeleteLocationButton";
 import { AuthHeaders } from "@/helpers/authHeaders";
+import UpdateLocation from "./_components/UpdateLocation";
+import FormUpdateLocation from "./_components/FormUpdateLocation";
 
 const LocationPage =  async ({searchParams}: { searchParams: {[key:string]: string | string[] | undefined }})=> {
     try {
-        let {data} = await axios.get<Location[]>(`${API_URL}/locations`, {
+        const response = await fetch(`${API_URL}/locations`, {
             headers: {
                 ...await AuthHeaders()
             },
+            next: {
+                tags: ['dashboard:locations']
+            }
         });
+        let data: Location[] = await response.json();
         data =[
             { 
                 locationId: 0, 
@@ -32,10 +37,14 @@ const LocationPage =  async ({searchParams}: { searchParams: {[key:string]: stri
                 <div className="w-4/5">
                     <LocationCard store={searchParams?.store} />
                 </div>
-                <div className="w-5/12 items-center justify-center flex py-10 px-5">
+                
+                <div className="flex flex-row flex-grow-0 gap-10 item-center justify-center">
                 <FormNewLocation store={searchParams?.store} />
-                </div>
+                <UpdateLocation store={searchParams?.store}>
+                    <FormUpdateLocation store={searchParams?.store} />
+                </UpdateLocation>
                 <DeleteLocationButton store={searchParams?.store} />
+                </div>
             </div>
            </div> 
         );

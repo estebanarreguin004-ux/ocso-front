@@ -1,8 +1,7 @@
 import { Employee } from "@/entities";
-import axios from "axios";
-import { API_URL, TOKEN_NAME } from "@/constants";
-import { cookies } from "next/headers";
+import { API_URL } from "@/constants";
 import { Card, CardHeader, CardBody, Divider } from "@nextui-org/react";
+import { AuthHeaders } from "@/helpers/authHeaders";
 
 export default async function EmployeesLocation({ store }: { store: string | string[] | undefined }) {
     if (!store || store === "" || store === "undefined") {
@@ -13,15 +12,19 @@ export default async function EmployeesLocation({ store }: { store: string | str
         );
     }
 
-    const token = await cookies().get(TOKEN_NAME)?.value;
-    const { data } = await axios.get<Employee[]>(`${API_URL}/employees/location/${store}`, {
+    const response = await fetch(`${API_URL}/employees/location/${store}`, {
+        method: "GET",
         headers: {
-            Authorization: `Bearer ${token}`
+            ...await AuthHeaders()
+        },
+        next: { 
+            tags: ['dashboard:locations:employees']
         }
     });
+    const data: Employee[] = await response.json();
     if(!data) return null
 
-    return data.map(employee => {
+    return data.map((employee: Employee) => {
         const fullName = `${employee.employeeName} ${employee.employeeLastName}`;
         return <Card className="mx-10 my-4 bx-5 by-5 bg-gray-100" > 
             <CardHeader>

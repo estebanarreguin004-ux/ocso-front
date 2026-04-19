@@ -1,3 +1,5 @@
+
+
 'use server';
 import { API_URL, TOKEN_NAME } from "@/constants";
 import { AuthHeaders } from "@/helpers/authHeaders";
@@ -5,7 +7,7 @@ import { cookies } from "next/headers";
 import { revalidateTag } from "next/cache";
 import { redirect } from "next/navigation";
 
-export async function createLocation(formData: FormData) {
+export async function updateLocation(store: string, formData: FormData) {
     const token = cookies().get(TOKEN_NAME)?.value;
     if(!token) return;
     let location :any = {};
@@ -24,8 +26,8 @@ export async function createLocation(formData: FormData) {
         }
     }
     location.locationLatLng = locationLatLng;
-    const response = await fetch(`${API_URL}/locations`, {
-        method: "POST",
+    const response = await fetch(`${API_URL}/locations/${store}`, {
+        method: "PATCH",
         headers: {
             'content-type': 'application/json',
             ...await AuthHeaders()
@@ -34,9 +36,9 @@ export async function createLocation(formData: FormData) {
     });
     const data = await response.json();
 
-    if(response.status == 201) {
-        revalidateTag('dashboard:locations');
-        redirect('/dashboard/strore=' + data.locationId);
+    if(response.status == 200) {
+        revalidateTag(`dashboard:locations:${store}`);
+        redirect('/dashboard/store=' + data.locationId);
     }
     redirect('/dashboard');
 }

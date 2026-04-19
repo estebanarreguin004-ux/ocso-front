@@ -2,7 +2,6 @@
 
 import { Button, Input } from "@nextui-org/react";
 import Link from "next/link";
-import axios from "axios";
 import { API_URL } from "@/constants";
 import { useState } from "react";
 import { Spinner } from "@nextui-org/react";
@@ -24,7 +23,10 @@ export default function LoginPage() {
         //return;
         
         try {
-            const response = await axios.post(`${API_URL}/auth/login`, authData, { withCredentials: true });
+            const response = await fetch(`${API_URL}/auth/login`, {
+                body: JSON.stringify(authData),
+                credentials: "include"
+            });
             if(response.status === 201) {
                 router.push("/dashboard");
             }
