@@ -6,7 +6,7 @@ export default function LayoutDashboard( {children, locations}: Readonly<{ child
  }> )  {
     return <div className="bg-orange-50 flex flex-col">
         <Header />
-        <div className="flex flex-row h-[90vh]">
+        <div className="items-center justify-content flex flex-row h-[90vh]">
             <Sidebar />
             {children}
             {locations}
