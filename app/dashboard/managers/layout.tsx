@@ -1,0 +1,18 @@
+import ManagerCards from "./_components/ManagerCard"
+import { ReactNode } from "react"
+
+export default function LayoutManagers({children, count}: {children: ReactNode, count:ReactNode}) {
+    return(
+        <>
+        <div className="w-4/12 max-h-[90vh] h-[90vh] overflow-hidden overflow-y-auto">
+            <ManagerCards/>
+        </div>
+        <div className="w-7/12 flex flex-col justify-center gap-20">
+            {children} 
+            <div>
+                {count}
+            </div>
+        </div>
+        </>
+    )
+}
