@@ -13,7 +13,8 @@ export default async function createManager(formData: FormData) {
         method: "POST",
         body: JSON.stringify(manager),
         headers: {
-            ...AuthHeaders()
+            ...AuthHeaders(),
+            'content-type': 'application/json'
         }
     })
 

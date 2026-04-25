@@ -3,7 +3,7 @@ import { Card, CardBody, CardHeader, Divider } from "@nextui-org/react";
 
 export default function ProviderCard({provider}: {provider: Provider}) {
     return(
-        <Card className="pr-20 pl-10 content-start text-left">
+        <Card className="pr-20 pl-10 mi-w-[200px] content-start text-left">
         <CardHeader>
             {provider.providerName}
         </CardHeader>
@@ -19,9 +19,9 @@ export default function ProviderCard({provider}: {provider: Provider}) {
             <b>{provider.phoneNumber}</b>
             <p>
               {
-                provider.products ? (
+                provider.products.length !== 0 ? (
                     <p>
-                        Tiene {provider.products.length} productos
+                        Tiene {provider.products.length} producto{provider.products.length == 1? "" : "s"}
                     </p>
                 ) : 
                 <p>No tiene productos</p>
