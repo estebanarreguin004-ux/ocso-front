@@ -10,6 +10,5 @@ export default function FormCreateProvider(){
         <Input label="Numero de telefono" placeholder="4xx 2xx 12xx" name="phoneNumber"></Input>
         <Button type="submit">Crear</Button>
         </form>
-        
     )
 }

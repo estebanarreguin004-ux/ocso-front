@@ -10,6 +10,9 @@ const ProvidersPage = async () => {
     const response = await fetch(`${API_URL}/providers`, {
         headers: {
             ...await AuthHeaders()
+        },
+        next:{
+            tags: ["dashboard:providers"]
         }
     })
     const providers: Provider[] = await response.json()
