@@ -20,10 +20,13 @@ export default async function ManagerPage({params} : {params: {id: string}}){
     return (
         <div className="w-8/12 flex flex-col items-center gap-10">
             <ManagerCard manager={data}/>
+            <div className="bg-white flex flex-row flex-grow-0 gap-2 rounded-mg">
             <DeleteManagerButton managerId={data.managerId} />
             <UpdateManager>
                 <FormUpdateManager manager={data}/>
             </UpdateManager>
+            </div>
+            
 
         </div>
     )

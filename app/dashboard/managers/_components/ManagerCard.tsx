@@ -28,7 +28,8 @@ export default async function ManagerCards() {
             <Divider />
             <CardBody>
             <p className="w-full">Email: <b>{manager.managerEmail}</b></p>
-                <p className="w-full">Teléfono: <b>{manager.managerPhoneNumber}</b></p>
+            <p className="w-full">Teléfono: <b>{manager.managerPhoneNumber}</b></p>
+            <p className="w-full">Salario: <b>{manager.managerSalary}</b></p>
             </CardBody>
             </Card>
             </Link>
