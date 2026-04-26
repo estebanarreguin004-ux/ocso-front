@@ -14,12 +14,12 @@ export default async function FormUpdateProvider ({provider}: {provider: Provide
     })
 
     return(
-        <form action={updateProviderWithId} className="justify-end gap-4 flex flex-col flex-grow-0">
-                <h1 className="text-2xl font-bolt text-black">Crear proveedor</h1>
+        <form action={updateProviderWithId} className="gap-4 flex flex-col flex-grow-0 bg-orange-300 rounded-lg py-5 px-10">
+                <h1 className="text-2xl font-bolt text-black">Actualizar datos</h1>
                 <Input label="Nombre" placeholder="Pecsi" name="providerName"></Input>
                 <Input label="Correo electronico" placeholder="pecsi@pecsi.com" name="providerEmail"></Input>
                 <Input label="Numero de telefono" placeholder="4xx 2xx 12xx" name="phoneNumber"></Input>
-                <Button type="submit">Actualizar</Button>
+                <Button color="primary" type="submit">Actualizar</Button>
         </form>
     )
 }

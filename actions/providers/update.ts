@@ -7,10 +7,15 @@ import { redirect } from "next/navigation"
 export default async function updateProvider(providerId: string, formData: FormData) {
     let provider: any = {}
         for(const key of formData.keys()){
-            provider[key] = formData.get(key)
+            const value = formData.get(key);
+            if (value && value.toString().trim() !== "") {
+                provider[key] = value;
+            }
         }
+
+        if (Object.keys(provider).length === 0) return;
     
-        const response = await fetch(`${API_URL}/providers`, {
+        const response = await fetch(`${API_URL}/providers/${providerId}`, {
             method: "PATCH",
             body: JSON.stringify(provider),
             headers: {
@@ -21,7 +26,7 @@ export default async function updateProvider(providerId: string, formData: FormD
     
         if (response.status === 200) {
             revalidateTag("dashboard:providers")
-            redirect("/dashboard/providers") 
+            redirect(`/dashboard/providers/${providerId}`) 
         } else {
             const errorData = await response.json();
             console.error("Error al actualizar proveedor:", errorData);
