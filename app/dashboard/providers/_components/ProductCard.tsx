@@ -1,10 +1,9 @@
 import { Card, CardBody, CardHeader, Divider } from "@nextui-org/react";
 import { Product } from "@/entities";
-import Link from "next/link";
 
 export default function ProductCard({product}: {product: Product}) {
     return(
-        <Card className="px-5">
+        <Card className="hover:scale-110 px-5">
             <CardHeader>
                 {product.productName}
             </CardHeader>
@@ -16,15 +15,6 @@ export default function ProductCard({product}: {product: Product}) {
             <p>
                 Precio: <b>{product.price}</b>
             </p>
-            <p>
-                No. de sellos: <b>{product.countSeal}</b>
-            </p>
-            <Link className="font-bold underline" href={`/dashboard/providers/${product.provider?.providerId}`}>
-            <p>
-                Proveedor: <b>{product.provider.providerName}</b>
-            </p>
-            </Link>
-            
             
             </CardBody>
         </Card>
