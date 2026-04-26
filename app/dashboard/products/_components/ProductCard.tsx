@@ -3,7 +3,7 @@ import { Product } from "@/entities";
 
 export default function ProductCard({product}: {product: Product}) {
     return(
-        <Card className="px-5">
+        <Card className="hover:scale-110 px-5">
             <CardHeader>
                 {product.productName}
             </CardHeader>
