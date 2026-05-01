@@ -22,5 +22,4 @@ export default async function deleteProducts(productId: string, formData: FormDa
         revalidateTag("dashboard:products")
         redirect("/dashboard/products")
     }
-
 }
