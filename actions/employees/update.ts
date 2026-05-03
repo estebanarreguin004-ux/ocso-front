@@ -5,17 +5,21 @@ import { revalidateTag } from "next/cache";
 import { redirect } from "next/navigation";
 
 export async function updateEmployee(employeeId: string, formData: FormData) {
-    formData.delete("$ACTION_REF_0");
-    formData.delete("$ACTION_0:1");
-    formData.delete("$ACTION_0:0");
+    const cleanData = new FormData()
+    for (const [key, value] of formData.entries()) {
+        if(!key.startsWith("$")){
+            cleanData.append(key, value);
+        }
+    }
 
     const response = await fetch(`${API_URL}/employees/${employeeId}`, {
         method: "PATCH",
         headers: {
             ...await AuthHeaders()
         },
-        body: formData
+        body: cleanData
     });
+
     console.log(await response.json());
 
     if(response.status == 200){ 

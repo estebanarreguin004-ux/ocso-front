@@ -5,6 +5,10 @@ import EmployeeCard from "../_components/EmployeeCard";
 import { Image } from "@nextui-org/react";
 import Link from "next/link";
 import FormUpdateEmployee from "./_components/FormUpdateEmployee";
+import DeleteEmployee from "./_components/DeleteEmployee";
+import CreateUser from "./_components/CreateUser";
+import FormCreateUser from "./_components/FormCreateUser";
+import { LuUser } from "react-icons/lu";
 
 export default async function EmployeePage({params}: {params: {id: string}}) {
     const responseEmployee = await fetch(`${API_URL}/employees/${params.id}`, {
@@ -25,10 +29,16 @@ export default async function EmployeePage({params}: {params: {id: string}}) {
                 <Link href={`/dashboard?store=${employee.location?.locationId}`}>                
                     <h1>{employee.location?.locationName}</h1>
                 </Link>
-                <Image src={employee.employeePhoto} className="z-0 object-cover" classNames={{img: "size-60"}} isZoomed/>
+                <div className="py-5">
+                <DeleteEmployee employeeId={employee.employeeId}/>
+                </div>
+                <CreateUser icon={<LuUser size="20"/>} photo={employee?.employeePhoto}>
+                    <FormCreateUser employee={employee} />
+                </CreateUser>
             </div>
 
             <FormUpdateEmployee employee={employee}/>
+
         </div>
     )
 }
