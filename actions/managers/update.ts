@@ -10,7 +10,14 @@ export default async function updateManager(managerId:string, formData: FormData
         manager[key] = formData.get(key)
     }
     manager['managerSalary'] = +manager['managerSalary'];
-    manager.location = +manager.location
+
+    if(manager.location) {
+        manager.location = +manager.location
+    } else {
+        delete manager.location;
+    }
+
+
 
     const response = await fetch(`${API_URL}/managers/${managerId}`, {
         method: "PATCH",

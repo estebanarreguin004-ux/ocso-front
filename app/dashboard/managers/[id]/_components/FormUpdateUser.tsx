@@ -1,22 +1,22 @@
 'use client'
 
-import RegisterEmploye from "@/actions/users/register-employee";
-import { Employee } from "@/entities";
 import { Input, Button } from "@nextui-org/react";
 import { useState } from "react";
 import { generate } from "generate-password";
 import { LuEye } from "react-icons/lu";
+import updateUser from "@/actions/users/update";
+import { User } from "@/entities";
 
-export default function FormCreateUser({employee}: {employee: Employee}) {
+export default function FormUpdateUser({user}: {user: User}) {
+    const { userId } = user;
     const [password, setPassword] = useState<string>();
     const [visible, setVisible] = useState<boolean>(false);
-    const { employeeId } = employee;
-    const registerEmployeeById = RegisterEmploye.bind(null, employeeId);
+    const updateUserById = updateUser.bind(null, userId);
 
     return (
-        <form action={registerEmployeeById} className="py-10 flex flex-col gap-2">
-            <h1 className="text-whit text-xl">Crear usuario</h1>
-            <Input label="Email" name="userEmail"/>
+        <form action={updateUserById} className="py-10 flex flex-col gap-2">
+            <h1 className="text-whit text-xl">Actualizar usuario</h1>
+            <Input defaultValue={user.userEmail} label="Email" name="userEmail"/>
             <Input value={password} label="Password" type={visible? "text": "password"} name="userPassword" endContent={
                 <button type="button" onMouseDown={()=> setVisible(true)}
                 onMouseUp={()=> setVisible(false)}
@@ -25,10 +25,9 @@ export default function FormCreateUser({employee}: {employee: Employee}) {
                 setPassword(generate({
                     length: 10
                 }))
-            }}>Generar contraseña</Button>
-            <Button type="submit" color="primary">Crear</Button>
+            }}>Generar contrrasea</Button>
+            <Button type="submit" color="primary">Actualizar</Button>
         </form>
     )
-
 
 }

@@ -1,14 +1,13 @@
 import { AuthHeaders } from "@/helpers/authHeaders";
 import { API_URL } from "@/constants";
 import { Employee } from "@/entities";
-import EmployeeCard from "../_components/EmployeeCard";
-import { Image } from "@nextui-org/react";
 import Link from "next/link";
 import FormUpdateEmployee from "./_components/FormUpdateEmployee";
 import DeleteEmployee from "./_components/DeleteEmployee";
 import CreateUser from "./_components/CreateUser";
 import FormCreateUser from "./_components/FormCreateUser";
 import { LuUser } from "react-icons/lu";
+import FormUpdateUser from "./_components/FormUpdateUser";
 
 export default async function EmployeePage({params}: {params: {id: string}}) {
     const responseEmployee = await fetch(`${API_URL}/employees/${params.id}`, {
@@ -32,9 +31,15 @@ export default async function EmployeePage({params}: {params: {id: string}}) {
                 <div className="py-5">
                 <DeleteEmployee employeeId={employee.employeeId}/>
                 </div>
+                <div>
                 <CreateUser icon={<LuUser size="20"/>} photo={employee?.employeePhoto}>
-                    <FormCreateUser employee={employee} />
+                    { 
+                    !employee.user ?
+                    (<FormCreateUser employee={employee} />) : (<FormUpdateUser user={employee.user} />)
+                    }
                 </CreateUser>
+                </div>
+                
             </div>
 
             <FormUpdateEmployee employee={employee}/>

@@ -6,8 +6,13 @@ import EmployeePhotoCard from "./EmployeePhotoCard"
 import { useState } from "react"
 import { SelectItem, Select } from "@nextui-org/react"
 
-export default function ListEmployees({employees, locations} : {employees: Employee[], locations: Location[]}){
+export default function ListEmployees({employees= [], locations} : {employees: Employee[], locations: Location[]}){
     const [ filter, setFilter ] = useState<string>("");
+
+    if (!employees || !Array.isArray(employees)) {
+        return <p>Cargando empleados...</p>;
+    }
+    
     return (
         <div className="">
         <Select 

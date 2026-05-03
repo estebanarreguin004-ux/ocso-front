@@ -6,6 +6,7 @@ import EmployeeCard from "./_components/EmployeeCard";
 import FormCreateEmployee from "./[id]/_components/FromCreateEmployee";
 import CreateEmployee from "./_components/CreateEmployee";
 import ListEmployees from "./_components/ListEmployees";
+import { LuPlus } from "react-icons/lu";
 
 const EmployeesPage = async () => {
     const response = await fetch(`${API_URL}/employees`, {
@@ -28,7 +29,7 @@ const EmployeesPage = async () => {
             <ListEmployees employees={employees} locations={locations}/>
         </div>
         <div className="absolute bottom-10 right-10">
-            <CreateEmployee>
+            <CreateEmployee icon={<LuPlus size="20"/>}>
                 <FormCreateEmployee/>
             </CreateEmployee>
         </div>
