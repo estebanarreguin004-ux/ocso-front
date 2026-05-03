@@ -40,7 +40,7 @@ const ProductsPage = async () => {
                 type="number"
                 isRequired
             />
-        <SelectProvider providers={providers}/>
+        <SelectProvider providers={providers} defaultProvider={providers}/>
         <Button type="submit">Crear</Button>
         </form>
     )
